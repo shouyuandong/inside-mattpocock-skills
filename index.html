@@ -311,6 +311,163 @@
             <p>一次对话做不完的大工程。它不直接做交付，而是在 issue tracker 上画一张共享地图，逐个解决待定事项，把未知范围逐步收窄。地图清晰后交给 <code>/to-spec</code>，不直接进 <code>/implement</code>。</p>
           </div>
         </div>
+
+        <h3>按任务场景分的八条路线</h3>
+        <p>同一套技能，落到不同任务上是不同的走法。下面按场景画成八条路线，标出哪些环节只能你自己敲命令，哪些由 agent 按情况接上。</p>
+
+        <div class="wf-legend">
+          <span class="wf-key"><span class="wf-chip is-user">手动</span>只有输入 <code>/name</code> 才会开始</span>
+          <span class="wf-key"><span class="wf-chip is-auto">自动</span>模型触发，agent 会自己调用，也能手动敲</span>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">A</span>小改：一次对话做完</h4>
+            <p>不写规格书，也不拆 ticket。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-user"><code>/implement</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>tdd</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>code-review</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>pr</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><code>/retro</code><span class="wf-tag">手动</span></span>
+          </div>
+          <p class="wf-note">收尾的 <code>/retro</code> 改的是 agent 的工作环境，不是这次的代码。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">B</span>单个 ticket：按编号实现</h4>
+            <p>已经有明确的 ticket，直接实现。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-user"><code>/implement</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>tdd</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>code-review</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>pr</code><span class="wf-tag">自动</span></span>
+          </div>
+          <p class="wf-note">传入 ticket 编号后，它先从 tracker 取回并念出标题，指代不清时先问你。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">C</span>新功能：先追问，再写规格书</h4>
+            <p>还没拆开的活，走完整的三段。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-user"><code>/grill-with-docs</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><code>/to-spec</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><code>/to-tickets</code><span class="wf-tag">手动</span></span>
+          </div>
+          <div class="wf-chain wf-chain-next">
+            <span class="wf-step is-user"><span class="wf-label"><code>/implement</code> 或 <code>/implement-spec</code></span><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>tdd</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>code-review</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>pr</code><span class="wf-tag">自动</span></span>
+          </div>
+          <p class="wf-note">前三个阶段共用同一份上下文，<code>/to-tickets</code> 之后才清空。没有工作目录时把第一步换成 <code>/grill-me</code>，它不留文件。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">D</span>修 bug：先复现，再猜原因</h4>
+            <p>有稳定复现手段的缺陷、偶发 flake 和回归。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-auto"><code>diagnosing-bugs</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>稳定复现</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>修复 + 回归测试</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>code-review</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><code>pr</code><span class="wf-tag">自动</span></span>
+          </div>
+          <p class="wf-note">它属于模型触发，你描述现象，agent 会自己接上。拿不出几秒钟跑完、每次结果一致的复现命令，它就停下，不靠读代码猜。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">E</span>issue 积压：先分诊，再定谁来做</h4>
+            <p>别人提的 bug、需求和外部 PR。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-user"><code>/triage</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>查代码与范围外</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>复现或检出验证</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>标签 + brief</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><span>转入 B</span><span class="wf-tag">手动</span></span>
+          </div>
+          <p class="wf-note">它只处理别人提的 issue。仓库自己用 <code>/to-tickets</code> 拆出的 ticket 已经写好，不用再分诊。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">F</span>大工程：先探路，再出规格书</h4>
+            <p>一次对话做不完，方向还没定。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-user"><code>/wayfinder</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span class="wf-label"><code>grilling</code> 追问</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>逐个关掉决策 ticket</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><code>/to-spec</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><span>转入 C</span><span class="wf-tag">手动</span></span>
+          </div>
+          <p class="wf-note">探路只做决定不做交付，地图清晰后必须经 <code>/to-spec</code>，不能直接进 <code>/implement</code>。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">G</span>绕行：问题必须跑起来才能回答</h4>
+            <p>状态模型、业务逻辑、需要看到的 UI。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-auto"><code>prototype</code><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><code>/handoff</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>在原型目录里做实验</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-user"><code>/handoff</code><span class="wf-tag">手动</span></span>
+          </div>
+          <p class="wf-note">这类问题在对话里争不出答案。原型放在自己的目录里，不落进仓库主干，做完把结论带回来，继续走 C。</p>
+        </div>
+
+        <div class="wf">
+          <div class="wf-head">
+            <h4><span class="wf-scene">H</span>导航：不知道该走哪条</h4>
+            <p>拿不准用哪个技能时先问它。</p>
+          </div>
+          <div class="wf-chain">
+            <span class="wf-step is-user"><code>/ask-matt</code><span class="wf-tag">手动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>按场景判断</span><span class="wf-tag">自动</span></span>
+            <span class="wf-arrow" aria-hidden="true">→</span>
+            <span class="wf-step is-auto"><span>指向上面某一条路线</span><span class="wf-tag">自动</span></span>
+          </div>
+          <p class="wf-note">它的摘要只用于定位，判断某个技能做什么之前，仍要先读那个技能的 <code>SKILL.md</code>。</p>
+        </div>
       </section>
 
       <!-- ================= 05 INDEX ================= -->

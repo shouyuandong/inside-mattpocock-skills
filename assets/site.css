@@ -598,6 +598,97 @@ p code, li code, td code, .callout code {
 }
 .flow ul li { margin-bottom: 4px; }
 
+/* ---------- task scenarios ---------- */
+.wf-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin: 20px 0 4px;
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+.wf-key { display: inline-flex; align-items: center; gap: 8px; }
+.wf-chip {
+  display: inline-block;
+  padding: 1px 9px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  line-height: 1.7;
+}
+.wf-chip.is-user { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.wf-chip.is-auto { color: var(--ink-3); border-color: var(--line-strong); background: var(--bg-soft); }
+
+.wf {
+  margin-top: 18px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.wf-head h4 { font-size: 15px; margin-bottom: 3px; }
+.wf-scene {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-right: 6px;
+}
+.wf-head p { margin: 0; font-size: 13px; color: var(--ink-3); }
+.wf-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 6px 4px;
+  margin-top: 14px;
+}
+.wf-chain-next { margin-top: 8px; }
+.wf-step {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 7px 11px 25px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: var(--bg);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.wf-step code { font-size: 12px; color: inherit; }
+.wf-step .wf-tag {
+  position: absolute;
+  left: 11px;
+  bottom: 6px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .1em;
+  color: var(--ink-3);
+}
+.wf-step.is-user {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.wf-step.is-user .wf-tag { color: var(--accent); }
+.wf-arrow {
+  align-self: center;
+  padding: 0 2px;
+  font-size: 12px;
+  color: var(--line-strong);
+}
+.wf-note {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
 /* ---------- skill explorer ---------- */
 .explorer {
   margin-top: 26px;
